@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sadullayev Diyor — Portfolio</title>
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #ff4071 0%, #ff6b8b 100%);
+            --card-bg: #ffffff;
+            --text-color: #0a192f;
+            --header-bg: #0a192f;
+            --header-text: #ffffff;
+            --badge-bg: #ff4071;
+            --badge-text: #ffffff;
+            --border-color: #0a192f;
+            --shadow-color: #0a192f;
+            --course-bg: #fff0f3;
+            --fav-bg: #0a192f;
+            --fav-text: #ffffff;
+            --fav-accent: #ff8da1;
+            --modal-bg: #ffffff;
+        }
+
+        [data-theme="dark"] {
+            --bg-gradient: linear-gradient(135deg, #2d0b1e 0%, #521535 100%);
+            --card-bg: #1e0917;
+            --text-color: #ffd0e0;
+            --header-bg: #12030e;
+            --header-text: #ffffff;
+            --badge-bg: #a82353;
+            --badge-text: #ffffff;
+            --border-color: #ff6b8b;
+            --shadow-color: #ff4071;
+            --course-bg: #380e28;
+            --fav-bg: #12030e;
+            --fav-text: #ffd0e0;
+            --fav-accent: #ff6b8b;
+            --modal-bg: #1e0917;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+
+        body {
+            background: var(--bg-gradient);
+            color: var(--text-color);
+            min-height: 100vh;
+            padding: 2rem 1rem;
+            display: flex;
+            justify-content: center;
+        }
+
+        .wrapper {
+            max-width: 900px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--header-bg);
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            border: 2px solid var(--border-color);
+        }
+
+        .theme-toggle-btn {
+            background-color: var(--badge-bg);
+            color: #ffffff;
+            border: none;
+            padding: 0.5rem 1.2rem;
+            border-radius: 20px;
+            font-weight: 900;
+            cursor: pointer;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
+        .header-card {
+            background-color: var(--header-bg);
+            color: var(--header-text);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 3px solid var(--border-color);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .header-card h1 {
+            font-size: 2.8rem;
+            font-weight: 900;
+            letter-spacing: -1px;
+            color: #ffffff;
+        }
+
+        .header-card .major {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--fav-accent);
+            margin-top: 0.3rem;
+        }
+
+        .badge {
+            background-color: var(--badge-bg);
+            color: var(--badge-text);
+            font-weight: 800;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 3px solid var(--border-color);
+            border-radius: 18px;
+            padding: 1.5rem;
+            box-shadow: 6px 6px 0px var(--shadow-color);
+        }
+
+        .card h2 {
+            font-size: 1.4rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            border-bottom: 3px solid var(--badge-bg);
+            padding-bottom: 0.3rem;
+        }
+
+        .course-item {
+            background-color: var(--course-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 0.8rem 1rem;
+            margin-bottom: 0.8rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .course-name {
+            font-weight: 800;
+            font-size: 1rem;
+        }
+
+        .btn-view {
+            background-color: var(--header-bg);
+            color: #ffffff;
+            border: 1px solid var(--border-color);
+            padding: 0.5rem 0.8rem;
+            border-radius: 8px;
+            font-weight: 800;
+            font-size: 0.8rem;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .btn-view:hover {
+            background-color: var(--badge-bg);
+        }
+
+        .hackathon-tag {
+            display: inline-block;
+            background-color: var(--header-bg);
+            color: #ffffff;
+            font-weight: 800;
+            padding: 0.6rem 1rem;
+            border-radius: 10px;
+            margin: 0.3rem 0.3rem 0.3rem 0;
+            font-size: 0.95rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .fav-box {
+            background-color: var(--fav-bg);
+            color: var(--fav-text);
+            border-radius: 18px;
+            padding: 1.5rem;
+            border: 3px solid var(--border-color);
+            box-shadow: 6px 6px 0px var(--shadow-color);
+        }
+
+        .fav-box h3 {
+            color: var(--fav-accent);
+            font-weight: 900;
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.75);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+            z-index: 1000;
+        }
+
+        .modal {
+            background: var(--modal-bg);
+            border: 4px solid var(--border-color);
+            border-radius: 20px;
+            max-width: 450px;
+            width: 100%;
+            padding: 2rem;
+            box-shadow: 10px 10px 0px var(--shadow-color);
+        }
+
+        .modal h3 {
+            font-size: 1.6rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+        }
+
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            font-weight: 800;
+            font-size: 1.1rem;
+            margin-bottom: 0.8rem;
+            padding-bottom: 0.4rem;
+            border-bottom: 2px dashed var(--border-color);
+        }
+
+        .hw-list {
+            margin-top: 1rem;
+        }
+
+        .hw-item {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin-bottom: 0.4rem;
+        }
+
+        .status-done {
+            color: #10b981;
+        }
+
+        .status-pending {
+            color: #f59e0b;
+        }
+
+        .btn-close {
+            margin-top: 1.5rem;
+            width: 100%;
+            background-color: var(--header-bg);
+            color: #ffffff;
+            border: 2px solid var(--border-color);
+            padding: 0.8rem;
+            border-radius: 10px;
+            font-weight: 900;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="wrapper">
+    <div class="top-bar">
+        <span style="color: #ffffff; font-weight: 900; text-transform: uppercase;">Student Portal</span>
+        <button class="theme-toggle-btn" onclick="toggleTheme()">🌙 Night Mode</button>
+    </div>
+
+    <div class="header-card">
+        <div>
+            <h1>Sadullayev Diyor</h1>
+            <div class="major">Computer Science & Software Engineering</div>
+        </div>
+        <span class="badge">1st Year Student</span>
+    </div>
+
+    <div class="grid-container">
+        <div class="card">
+            <h2>Enrolled Courses (7)</h2>
+            <div id="courses-container"></div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+            <div class="card">
+                <h2>Hackathons Participated</h2>
+                <div class="hackathon-tag">🚀 NASA Space Apps Challenge</div>
+                <div class="hackathon-tag">📊 UZEX Hackathon</div>
+                <div class="hackathon-tag">💡 WIUT Hackathon</div>
+            </div>
+
+            <div class="fav-box">
+                <h3>Favorite Subjects</h3>
+                <p style="font-weight: 800; font-size: 1.1rem; margin-bottom: 1rem;">Intro to IT & OOP 1</p>
+                <h3>Top Professor</h3>
+                <p style="font-weight: 800; font-size: 1.1rem;">Akobirhuja Anvarov</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-overlay" id="modal">
+    <div class="modal">
+        <h3 id="modal-course-title">Course Title</h3>
+        <div class="stat-row">
+            <span>Midterm Score:</span>
+            <span id="modal-midterm" style="color: var(--badge-bg);">0/100</span>
+        </div>
+        <div class="stat-row">
+            <span>Overall Grade:</span>
+            <span id="modal-overall">0%</span>
+        </div>
+        
+        <h4 style="font-weight: 900; margin-top: 1rem;">Homework Progress:</h4>
+        <div class="hw-list" id="modal-hw"></div>
+
+        <button class="btn-close" onclick="closeModal()">Close Details</button>
+    </div>
+</div>
+
+<script>
+    const courseData = [
+        {
+            name: "Calculus",
+            midterm: "96 / 100",
+            overall: "95%",
+            hw: [
+                { title: "HW1: Limits & Continuity", status: "Done", done: true },
+                { title: "HW2: Derivatives Practice", status: "Done", done: true },
+                { title: "HW3: Integration Basics", status: "Pending", done: false }
+            ]
+        },
+        {
+            name: "Academic English",
+            midterm: "92 / 100",
+            overall: "93%",
+            hw: [
+                { title: "Essay 1: Tech Influence", status: "Done", done: true },
+                { title: "Presentation Preparation", status: "Done", done: true }
+            ]
+        },
+        {
+            name: "Academic English Reading",
+            midterm: "94 / 100",
+            overall: "94%",
+            hw: [
+                { title: "Article Summaries 1-3", status: "Done", done: true },
+                { title: "Critical Reading Analysis", status: "Done", done: true }
+            ]
+        },
+        {
+            name: "Physics 1",
+            midterm: "98 / 100",
+            overall: "97%",
+            hw: [
+                { title: "HW1: Kinematics", status: "Done", done: true },
+                { title: "HW2: Centripetal Force", status: "Done", done: true }
+            ]
+        },
+        {
+            name: "Physics Experiments",
+            midterm: "100 / 100",
+            overall: "99%",
+            hw: [
+                { title: "Lab 1: Motion Measurements", status: "Done", done: true },
+                { title: "Lab 2: Free Fall Lab Report", status: "Done", done: true }
+            ]
+        },
+        {
+            name: "Intro to IT",
+            midterm: "100 / 100",
+            overall: "100%",
+            hw: [
+                { title: "HW1: Binary & Boolean Logic", status: "Done", done: true },
+                { title: "HW2: Network Protocols Lab", status: "Done", done: true }
+            ]
+        },
+        {
+            name: "OOP 1",
+            midterm: "99 / 100",
+            overall: "98%",
+            hw: [
+                { title: "Lab 1.1 & 1.2 C++ Practice", status: "Done", done: true },
+                { title: "OOP Classes & Constructors", status: "Done", done: true }
+            ]
+        }
+    ];
+
+    function renderCourses() {
+        const container = document.getElementById('courses-container');
+        container.innerHTML = '';
+        courseData.forEach((course, index) => {
+            const item = document.createElement('div');
+            item.className = 'course-item';
+            item.innerHTML = `
+                <span class="course-name">${course.name}</span>
+                <button class="btn-view" onclick="openModal(${index})">See Midterm Results</button>
+            `;
+            container.appendChild(item);
+        });
+    }
+
+    function openModal(index) {
+        const data = courseData[index];
+        document.getElementById('modal-course-title').innerText = data.name;
+        document.getElementById('modal-midterm').innerText = data.midterm;
+        document.getElementById('modal-overall').innerText = data.overall;
+
+        const hwContainer = document.getElementById('modal-hw');
+        hwContainer.innerHTML = '';
+        data.hw.forEach(item => {
+            const hwEl = document.createElement('div');
+            hwEl.className = 'hw-item';
+            hwEl.innerHTML = `
+                <span>${item.title}</span>
+                <span class="${item.done ? 'status-done' : 'status-pending'}">${item.status}</span>
+            `;
+            hwContainer.appendChild(hwEl);
+        });
+
+        document.getElementById('modal').style.display = 'flex';
+    }
+
+    function closeModal() {
+        document.getElementById('modal').style.display = 'none';
+    }
+
+    function toggleTheme() {
+        const currentTheme = document.body.getAttribute('data-theme');
+        const btn = document.querySelector('.theme-toggle-btn');
+        if (currentTheme === 'dark') {
+            document.body.removeAttribute('data-theme');
+            btn.innerHTML = '🌙 Night Mode';
+        } else {
+            document.body.setAttribute('data-theme', 'dark');
+            btn.innerHTML = '☀️ Day Mode';
+        }
+    }
+
+    renderCourses();
+</script>
+
+</body>
+</html>
